@@ -125,9 +125,12 @@ export const Table = styled.table`
   min-width: 100%;
   text-sm: 14px;
   text-align: left;
+  border-radius: 8px 8px 0 0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
 `;
 
-export const TableHeader = styled.th`
+export const TableHead = styled.thead`
   padding: 1rem;
   font-weight: 600;
   background-color: #f3f4f6;
@@ -146,7 +149,10 @@ export const TableCell = styled.td`
   font-size: 0.875rem;
   color: #4b5563;
 `;
-
+export const P = styled.p`
+  font-size: 0.875rem;
+  color: #4b5563;
+`;
 export const StatusBadge = styled.span<{ status: string }>`
   padding: 0.25rem 0.75rem;
   border-radius: 0.375rem;
@@ -157,8 +163,8 @@ export const StatusBadge = styled.span<{ status: string }>`
     props.status === "completed"
       ? `background-color: #d1fae5; color: #15803d;`
       : props.status === "pending"
-      ? `background-color: #fef3c7; color: #92400e;`
-      : `background-color: #fee2e2; color: #b91c1c;`}
+        ? `background-color: #fef3c7; color: #92400e;`
+        : `background-color: #fee2e2; color: #b91c1c;`}
 `;
 
 export const Spinner = styled.div`
@@ -204,7 +210,6 @@ export const PaginationRow = styled.div`
 `;
 
 export const PaginationButton = styled.button`
-  padding: 0.25rem 0.75rem;
   border: 1px solid #d1d5db;
   border-radius: 0.375rem;
   transition: background-color 0.2s ease;

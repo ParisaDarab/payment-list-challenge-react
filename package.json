@@ -21,7 +21,7 @@
     "score": "npm install && node scoring.js"
   },
   "dependencies": {
-    "@tanstack/react-query": "^5.81.5",
+    "@tanstack/react-query": "^5.101.2",
     "axios": "^1.10.0",
     "date-fns": "^4.1.0",
     "react": "^19.0.0",

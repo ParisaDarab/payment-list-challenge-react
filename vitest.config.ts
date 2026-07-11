@@ -4,15 +4,16 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
   plugins: [react()],
   test: {
-    reporters: ['junit', 'verbose'],
-    environment: 'jsdom',
+    reporters: ["junit", "verbose"],
+    environment: "jsdom",
+    setupFiles: "./src/test/setup.ts",
     globals: true,
     outputFile: {
-      junit: './junit.xml',
+      junit: "./junit.xml",
     },
     coverage: {
-      provider: 'v8',
-      reporter: ['text', 'json', 'html'],
+      provider: "v8",
+      reporter: ["text", "json", "html"],
     },
   },
 });
