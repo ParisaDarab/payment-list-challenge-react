@@ -8,8 +8,8 @@ export function getErrorMessage(error: unknown): string {
     return error.message;
   }
   if (error instanceof PaymentApiError) {
-    if (error.status === 404) return I18N.MESSAGES.PAYMENT_NOT_FOUND;
-    return I18N.MESSAGES.INTERNAL_SERVER_ERROR;
+    if (error.status === 404) return I18N.PAYMENT_NOT_FOUND;
+    return I18N.INTERNAL_SERVER_ERROR;
   }
-  return I18N.MESSAGES.SOMETHING_WENT_WRONG;
+  return I18N.SOMETHING_WENT_WRONG;
 }

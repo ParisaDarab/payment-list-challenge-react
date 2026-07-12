@@ -1,4 +1,3 @@
-import React from "react";
 import { I18N } from "./constants/i18n";
 import {
   QueryCache,
@@ -18,7 +17,7 @@ const queryClient = new QueryClient({
     },
   },
   queryCache: new QueryCache({
-    onError: (error, query) => {
+    onError: (_error, query) => {
       console.error(
         JSON.stringify({ event: "query_failed", queryKey: query.queryKey }),
       );
@@ -37,7 +36,7 @@ function App() {
         <header className="bg-white shadow-sm">
           <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
             <h1 className="text-3xl font-bold text-gray-900">
-              {I18N.APP.APP_TITLE}
+              {I18N.APP_TITLE}
             </h1>
           </div>
         </header>

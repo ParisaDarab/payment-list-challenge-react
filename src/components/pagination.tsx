@@ -22,7 +22,7 @@ export const Pagination = ({
         onClick={onHandlePagination}
         disabled={previousButtonDisable}
       >
-        {I18N.PAGINATION.PREVIOUS_BUTTON}
+        {I18N.PREVIOUS_BUTTON}
       </PaginationButton>
       <P className="text-[#1f2937]">Page {currentPage}</P>
       <PaginationButton
@@ -30,7 +30,7 @@ export const Pagination = ({
         onClick={onHandlePagination}
         disabled={nextButtonDisable}
       >
-        {I18N.PAGINATION.NEXT_BUTTON}
+        {I18N.NEXT_BUTTON}
       </PaginationButton>
     </div>
   );

@@ -6,14 +6,14 @@ import App from "./App";
 it("clear filters resets both the search input and the currency dropdown", async () => {
   render(<App />);
 
-  const searchInput = screen.getByRole("textbox", {
-    name: I18N.SEARCH_FORM.SEARCH_LABEL,
+  const searchInput = screen.getByRole("searchbox", {
+    name: I18N.SEARCH_LABEL,
   });
   const currencyDropdown = screen.getByRole("combobox", {
-    name: I18N.SEARCH_FORM.CURRENCY_FILTER_LABEL,
+    name: I18N.CURRENCY_FILTER_LABEL,
   });
   const clearButton = screen.getByRole("button", {
-    name: I18N.SEARCH_FORM.CLEAR_FILTERS,
+    name: I18N.CLEAR_FILTERS,
   });
 
   fireEvent.change(searchInput, { target: { value: "pay_134_1" } });

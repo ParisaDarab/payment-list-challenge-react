@@ -63,11 +63,9 @@ export const formattedDate = (date: string) => {
 export const getSearchInput = () => {
   // Try to find by placeholder first, then by role with name
   try {
-    return screen.getByPlaceholderText(I18N.SEARCH_FORM.SEARCH_PLACEHOLDER);
+    return screen.getByPlaceholderText(I18N.SEARCH_PLACEHOLDER);
   } catch {
-    return screen.getByRole("searchbox", {
-      name: I18N.SEARCH_FORM.SEARCH_LABEL,
-    });
+    return screen.getByRole("searchbox", { name: I18N.SEARCH_LABEL });
   }
 };
 
@@ -86,22 +84,12 @@ describe("App - Step 1: Basic Payment List", () => {
     });
 
     // Check that table headers are displayed using i18n strings
-    expect(
-      screen.getByText(I18N.TABLE.TABLE_HEADER_PAYMENT_ID),
-    ).toBeInTheDocument();
-    expect(screen.getByText(I18N.TABLE.TABLE_HEADER_DATE)).toBeInTheDocument();
-    expect(
-      screen.getByText(I18N.TABLE.TABLE_HEADER_AMOUNT),
-    ).toBeInTheDocument();
-    expect(
-      screen.getByText(I18N.TABLE.TABLE_HEADER_CUSTOMER),
-    ).toBeInTheDocument();
-    expect(
-      screen.getByText(I18N.TABLE.TABLE_HEADER_CURRENCY),
-    ).toBeInTheDocument();
-    expect(
-      screen.getByText(I18N.TABLE.TABLE_HEADER_STATUS),
-    ).toBeInTheDocument();
+    expect(screen.getByText(I18N.TABLE_HEADER_PAYMENT_ID)).toBeInTheDocument();
+    expect(screen.getByText(I18N.TABLE_HEADER_DATE)).toBeInTheDocument();
+    expect(screen.getByText(I18N.TABLE_HEADER_AMOUNT)).toBeInTheDocument();
+    expect(screen.getByText(I18N.TABLE_HEADER_CUSTOMER)).toBeInTheDocument();
+    expect(screen.getByText(I18N.TABLE_HEADER_CURRENCY)).toBeInTheDocument();
+    expect(screen.getByText(I18N.TABLE_HEADER_STATUS)).toBeInTheDocument();
 
     // Check that 5 payments are displayed (pageSize=5)
     const tableRows = screen.getAllByRole("row");
@@ -115,10 +103,7 @@ describe("App - Step 2: Search by Payment ID", () => {
 
     const searchInput = getSearchInput();
     expect(searchInput).toBeInTheDocument();
-    expect(searchInput).toHaveAttribute(
-      "placeholder",
-      I18N.SEARCH_FORM.SEARCH_PLACEHOLDER,
-    );
+    expect(searchInput).toHaveAttribute("placeholder", I18N.SEARCH_PLACEHOLDER);
   });
 
   test("should search for payments by payment ID", async () => {
@@ -126,7 +111,7 @@ describe("App - Step 2: Search by Payment ID", () => {
 
     const searchInput = getSearchInput();
     const searchButton = screen.getByRole("button", {
-      name: I18N.SEARCH_FORM.SEARCH_BUTTON,
+      name: I18N.SEARCH_BUTTON,
     });
 
     fireEvent.change(searchInput, { target: { value: "pay_134_1" } });
@@ -144,7 +129,7 @@ describe("App - Step 3: Clear Filters", () => {
 
     const searchInput = getSearchInput();
     const searchButton = screen.getByRole("button", {
-      name: I18N.SEARCH_FORM.SEARCH_BUTTON,
+      name: I18N.SEARCH_BUTTON,
     });
 
     // Perform a search
@@ -157,7 +142,7 @@ describe("App - Step 3: Clear Filters", () => {
 
     // Clear filters
     const clearButton = screen.getByRole("button", {
-      name: I18N.SEARCH_FORM.CLEAR_FILTERS,
+      name: I18N.CLEAR_FILTERS,
     });
     fireEvent.click(clearButton);
 
@@ -172,13 +157,13 @@ describe("App - Step 4: Handle Payment Not Found", () => {
 
     const searchInput = getSearchInput();
     const searchButton = screen.getByRole("button", {
-      name: I18N.SEARCH_FORM.SEARCH_BUTTON,
+      name: I18N.SEARCH_BUTTON,
     });
 
     fireEvent.change(searchInput, { target: { value: "pay_404" } });
     fireEvent.click(searchButton);
 
-    await waitForErrorMessage(I18N.MESSAGES.PAYMENT_NOT_FOUND);
+    await waitForErrorMessage(I18N.PAYMENT_NOT_FOUND);
   });
 });
 
@@ -188,13 +173,13 @@ describe("App - Step 5: Handle Server Error", () => {
 
     const searchInput = getSearchInput();
     const searchButton = screen.getByRole("button", {
-      name: I18N.SEARCH_FORM.SEARCH_BUTTON,
+      name: I18N.SEARCH_BUTTON,
     });
 
     fireEvent.change(searchInput, { target: { value: "pay_500" } });
     fireEvent.click(searchButton);
 
-    await waitForErrorMessage(I18N.MESSAGES.INTERNAL_SERVER_ERROR);
+    await waitForErrorMessage(I18N.INTERNAL_SERVER_ERROR);
   });
 });
 
@@ -203,7 +188,7 @@ describe("App - Step 6: Currency Filter", () => {
     render(<App />);
 
     const currencySelect = screen.getByRole("combobox", {
-      name: I18N.SEARCH_FORM.CURRENCY_FILTER_LABEL,
+      name: I18N.CURRENCY_FILTER_LABEL,
     });
     expect(currencySelect).toBeInTheDocument();
   });
@@ -212,7 +197,7 @@ describe("App - Step 6: Currency Filter", () => {
     render(<App />);
 
     const currencySelect = screen.getByRole("combobox", {
-      name: I18N.SEARCH_FORM.CURRENCY_FILTER_LABEL,
+      name: I18N.CURRENCY_FILTER_LABEL,
     });
 
     fireEvent.change(currencySelect, { target: { value: "USD" } });
@@ -230,10 +215,10 @@ describe("App - Step 7: Combined Currency and Payment ID Filter", () => {
 
     const searchInput = getSearchInput();
     const searchButton = screen.getByRole("button", {
-      name: I18N.SEARCH_FORM.SEARCH_BUTTON,
+      name: I18N.SEARCH_BUTTON,
     });
     const currencySelect = screen.getByRole("combobox", {
-      name: I18N.SEARCH_FORM.CURRENCY_FILTER_LABEL,
+      name: I18N.CURRENCY_FILTER_LABEL,
     });
 
     // Search for a specific payment
@@ -262,10 +247,10 @@ describe("App - Step 8: Pagination", () => {
 
     // Check for pagination buttons
     expect(
-      screen.getByRole("button", { name: I18N.PAGINATION.PREVIOUS_BUTTON }),
+      screen.getByRole("button", { name: I18N.PREVIOUS_BUTTON }),
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("button", { name: I18N.PAGINATION.NEXT_BUTTON }),
+      screen.getByRole("button", { name: I18N.NEXT_BUTTON }),
     ).toBeInTheDocument();
   });
 
@@ -278,7 +263,7 @@ describe("App - Step 8: Pagination", () => {
     });
 
     const previousButton = screen.getByRole("button", {
-      name: I18N.PAGINATION.PREVIOUS_BUTTON,
+      name: I18N.PREVIOUS_BUTTON,
     });
     expect(previousButton).toBeDisabled();
   });

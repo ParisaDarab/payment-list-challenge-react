@@ -45,7 +45,7 @@ export const PaymentsPage = () => {
 
   const onSelectCurrency = (e: ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value;
-    if (value === I18N.FILTER_KEYS.CURRENCIES) {
+    if (value === I18N.CURRENCIES) {
       setCurrency("");
     } else setCurrency(e.target.value);
   };
@@ -53,7 +53,7 @@ export const PaymentsPage = () => {
   const handlePagination = (e: MouseEvent<HTMLButtonElement>) => {
     const direction = e.currentTarget.dataset.direction;
     if (
-      direction === I18N.BUTTONS.NEXT_BUTTON &&
+      direction === I18N.NEXT_BUTTON_LABEL &&
       data &&
       data.totalPages > filters.page
     ) {
@@ -61,7 +61,7 @@ export const PaymentsPage = () => {
         return { ...prev, page: Number(prev.page) + 1 };
       });
     }
-    if (direction === I18N.BUTTONS.PREVIOUS_BUTTON && filters.page > 1) {
+    if (direction === I18N.PREVIOUS_BUTTON_LABEL && filters.page > 1) {
       setFilters((prev) => {
         return { ...prev, page: Number(prev.page) - 1 };
       });
@@ -70,7 +70,7 @@ export const PaymentsPage = () => {
 
   return (
     <Container>
-      <Title>{I18N.APP.PAGE_TITLE}</Title>
+      <Title>{I18N.PAGE_TITLE}</Title>
 
       <SearchForm
         searchInput={searchInput}

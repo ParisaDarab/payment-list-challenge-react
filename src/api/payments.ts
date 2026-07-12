@@ -41,16 +41,16 @@ export async function searchPayments(filters: PaymentFilters) {
 
   if (filters.search) {
     if (!isValidSearchInput(filters.search)) {
-      throw new ValidationError(I18N.MESSAGES.VALIDATION_ERROR);
+      throw new ValidationError(I18N.VALIDATION_ERROR);
     }
-    params.set(I18N.FILTER_KEYS.SEARCH, filters.search);
+    params.set(I18N.SEARCH, filters.search);
   }
 
   if (filters.currency) {
     if (!isValidCurrency(filters.currency)) {
-      throw new ValidationError(I18N.MESSAGES.VALIDATION_ERROR);
+      throw new ValidationError(I18N.VALIDATION_ERROR);
     }
-    params.set(I18N.FILTER_KEYS.CURRENCY, filters.currency);
+    params.set(I18N.CURRENCY, filters.currency);
   }
 
   params.set("page", String(filters.page));

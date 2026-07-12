@@ -24,17 +24,18 @@ export const SearchForm = ({
     <form onSubmit={onSearchSubmit} className="mb-4">
       <div className="flex gap-3">
         <SearchInput
+          type="search"
           value={searchInput}
           onChange={onSearchInputChange}
-          aria-label={I18N.SEARCH_FORM.SEARCH_LABEL}
-          placeholder={I18N.SEARCH_FORM.SEARCH_PLACEHOLDER}
+          aria-label={I18N.SEARCH_LABEL}
+          placeholder={I18N.SEARCH_PLACEHOLDER}
         />
         <Select
           value={currency}
           onChange={onSelectCurrency}
-          aria-label={I18N.SEARCH_FORM.CURRENCY_FILTER_LABEL}
+          aria-label={I18N.CURRENCY_FILTER_LABEL}
         >
-          <option value="">{I18N.SEARCH_FORM.CURRENCIES_OPTION}</option>
+          <option value="">{I18N.CURRENCIES_OPTION}</option>
           {VALID_CURRENCIES.map((c) => (
             <option key={c} value={c}>
               {c}
@@ -42,10 +43,10 @@ export const SearchForm = ({
           ))}
         </Select>
         <SearchButton type="submit">
-          {I18N.SEARCH_FORM.SEARCH_BUTTON}
+          {I18N.SEARCH_BUTTON}
         </SearchButton>
         <ClearButton type="button" onClick={onClearFilters}>
-          {I18N.SEARCH_FORM.CLEAR_FILTERS}
+          {I18N.CLEAR_FILTERS}
         </ClearButton>
       </div>
     </form>

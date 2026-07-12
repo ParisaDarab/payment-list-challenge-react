@@ -4,12 +4,12 @@ import {
   TableBodyWrapper,
   TableCell,
   TableHead,
-  TableHeaderRow,
   TableRow,
   StatusBadge,
 } from "./components";
 import { PaymentsResponse } from "../types/payment";
 import { Pagination, paginationProps } from "./pagination";
+import { formatDate } from "../utils/formatDate";
 
 interface PaymentTableProps extends paginationProps {
   data: PaymentsResponse;
@@ -28,12 +28,12 @@ export const PaymentTable = ({
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell>{I18N.TABLE.TABLE_HEADER_PAYMENT_ID}</TableCell>
-            <TableCell>{I18N.TABLE.TABLE_HEADER_DATE}</TableCell>
-            <TableCell>{I18N.TABLE.TABLE_HEADER_AMOUNT}</TableCell>
-            <TableCell>{I18N.TABLE.TABLE_HEADER_CUSTOMER}</TableCell>
-            <TableCell>{I18N.TABLE.TABLE_HEADER_CURRENCY}</TableCell>
-            <TableCell>{I18N.TABLE.TABLE_HEADER_STATUS}</TableCell>
+            <TableCell>{I18N.TABLE_HEADER_PAYMENT_ID}</TableCell>
+            <TableCell>{I18N.TABLE_HEADER_DATE}</TableCell>
+            <TableCell>{I18N.TABLE_HEADER_AMOUNT}</TableCell>
+            <TableCell>{I18N.TABLE_HEADER_CUSTOMER}</TableCell>
+            <TableCell>{I18N.TABLE_HEADER_CURRENCY}</TableCell>
+            <TableCell>{I18N.TABLE_HEADER_STATUS}</TableCell>
           </TableRow>
         </TableHead>
         <TableBodyWrapper>
@@ -42,12 +42,12 @@ export const PaymentTable = ({
                 return (
                   <TableRow key={item.id}>
                     <TableCell>{item.id}</TableCell>
-                    <TableCell>{item.date}</TableCell>
+                    <TableCell>{formatDate(item.date)}</TableCell>
                     <TableCell>{item.amount}</TableCell>
                     <TableCell>{item.customerName}</TableCell>
                     <TableCell>{item.currency}</TableCell>
                     <TableCell>
-                      <StatusBadge status={item.status}>
+                      <StatusBadge $status={item.status}>
                         {item.status}
                       </StatusBadge>
                     </TableCell>
