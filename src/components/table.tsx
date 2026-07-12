@@ -20,8 +20,8 @@ export const PaymentTable = ({
   onHandlePagination,
   currentPage,
 }: PaymentTableProps) => {
-  let nextButtonDisable = data.totalPages == currentPage;
-  let previousButtonDisable = currentPage == 1;
+  const nextButtonDisable = data.totalPages == currentPage;
+  const previousButtonDisable = currentPage == 1;
 
   return (
     <>

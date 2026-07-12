@@ -17,7 +17,7 @@ export interface PaymentsResponse {
   total: number;
   page: number;
   pageSize: number;
-  totalPages: number;
+  totalPages?: number;
 }
 
 export interface PaymentFilters {
