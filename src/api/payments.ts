@@ -1,9 +1,10 @@
 import paymentAdaptor from "../adaptors/paymentAdaptor";
-import { API_URL, VALID_CURRENCIES } from "../constants";
-import { Currency, PaymentFilters, PaymentsResponse } from "../types/payment";
+import { VALID_CURRENCIES } from "../constants";
+import { Currency, PaymentFilters } from "../types/payment";
 import { I18N } from "../constants/i18n";
 import { ValidationError } from "../error/validationError";
-import { PaymentApiError } from "../error/paymentApiError";
+import { serviceCall } from "./serviceCall";
+import { services } from "./services";
 
 const SEARCH_INPUT_PATTERN = /^[a-zA-Z0-9À-ÿ'\-_. ]{1,50}$/;
 
@@ -56,15 +57,7 @@ export async function searchPayments(filters: PaymentFilters) {
   params.set("page", String(filters.page));
   params.set("pageSize", String(filters.pageSize));
 
-  const response = await fetch(`${API_URL}?${params.toString()}`);
+  const data = await serviceCall(services.payments.search, "", params);
 
-  if (!response.ok) {
-    throw new PaymentApiError(
-      response.status,
-      `Request failed with status ${response.status}`,
-    );
-  }
-
-  const data: PaymentsResponse = await response.json();
   return paymentAdaptor(data);
 }

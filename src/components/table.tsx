@@ -6,6 +6,7 @@ import {
   TableHead,
   TableRow,
   StatusBadge,
+  CenterContainer,
 } from "./components";
 import { PaymentsResponse } from "../types/payment";
 import { Pagination, paginationProps } from "./pagination";
@@ -22,6 +23,7 @@ export const PaymentTable = ({
 }: PaymentTableProps) => {
   const nextButtonDisable = data.totalPages == currentPage;
   const previousButtonDisable = currentPage == 1;
+  const COLUMN_COUNT = 6;
 
   return (
     <>
@@ -36,25 +38,33 @@ export const PaymentTable = ({
             <TableCell>{I18N.TABLE_HEADER_STATUS}</TableCell>
           </TableRow>
         </TableHead>
-        <TableBodyWrapper>
-          {data.payments.length > 0
-            ? data.payments.map((item) => {
-                return (
-                  <TableRow key={item.id}>
-                    <TableCell>{item.id}</TableCell>
-                    <TableCell>{formatDate(item.date)}</TableCell>
-                    <TableCell>{item.amount}</TableCell>
-                    <TableCell>{item.customerName}</TableCell>
-                    <TableCell>{item.currency}</TableCell>
-                    <TableCell>
-                      <StatusBadge $status={item.status}>
-                        {item.status}
-                      </StatusBadge>
-                    </TableCell>
-                  </TableRow>
-                );
-              })
-            : ""}
+        <TableBodyWrapper className="bg-slate-500 min-w-full">
+          {data.payments.length > 0 ? (
+            data.payments.map((item) => {
+              return (
+                <TableRow key={item.id}>
+                  <TableCell>{item.id}</TableCell>
+                  <TableCell>{formatDate(item.date)}</TableCell>
+                  <TableCell>{item.amount}</TableCell>
+                  <TableCell>{item.customerName}</TableCell>
+                  <TableCell>{item.currency}</TableCell>
+                  <TableCell>
+                    <StatusBadge $status={item.status}>
+                      {item.status}
+                    </StatusBadge>
+                  </TableCell>
+                </TableRow>
+              );
+            })
+          ) : (
+            <TableRow>
+              <TableCell colSpan={COLUMN_COUNT}>
+                <CenterContainer className="font-bold">
+                  {I18N.NO_PAYMENTS_FOUND}
+                </CenterContainer>
+              </TableCell>
+            </TableRow>
+          )}
         </TableBodyWrapper>
       </Table>
       <Pagination

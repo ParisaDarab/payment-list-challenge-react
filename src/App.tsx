@@ -6,6 +6,7 @@ import {
 } from "@tanstack/react-query";
 import { PaymentsPage } from "./components/PaymentsPage";
 import { clientContext } from "./models/systemInfo";
+import { PaymentApiError } from "./error/paymentApiError";
 
 // This is required for tests to pass if ReactQuery is used
 // you don't have to use this library in your solution.
@@ -18,12 +19,15 @@ const queryClient = new QueryClient({
     },
   },
   queryCache: new QueryCache({
-    onError: (_error, query) => {
+    onError: (error, query) => {
+      const requestId =
+        error instanceof PaymentApiError ? error.requestId : undefined;
       console.error(
         JSON.stringify({
           event: "query_failed",
           queryKey: query.queryKey,
           context: clientContext.get(),
+          requestId,
         }),
       );
     },

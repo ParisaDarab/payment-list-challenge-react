@@ -7,6 +7,14 @@ export const Container = styled.div`
   padding: 2.5rem 1rem;
 `;
 
+export const CenterContainer = styled.div`
+  width: 100%;
+  min-height: 8rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2.5rem 1rem;
+`;
 export const Title = styled.h2`
   font-size: 1.5rem;
   font-weight: 600;

@@ -67,12 +67,12 @@ export const handlers = [
       return matchesSearch && matchesCurrency;
     });
 
-    if (filteredPayments.length === 0) {
-      return HttpResponse.json(
-        { message: "Payment not found" },
-        { status: 404, statusText: "Not Found" },
-      );
-    }
+    // if (filteredPayments.length === 0) {
+    //   return HttpResponse.json(
+    //     { message: "Payment not found" },
+    //     { status: 200, statusText: "Not Found" },
+    //   );
+    // }
 
     const total = filteredPayments.length;
     const start = (page - 1) * pageSize;
