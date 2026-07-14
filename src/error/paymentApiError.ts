@@ -1,10 +1,9 @@
-export class PaymentApiError extends Error {
-  constructor(
-    public status: number,
-    message: string,
-    public requestId?: string,
-  ) {
-    super(message);
+// src/error/paymentApiError.ts
+import { ApiError } from "./apiError";
+
+export class PaymentApiError extends ApiError {
+  constructor(status: number, message: string, requestId?: string) {
+    super(status, message, requestId);
     this.name = "PaymentApiError";
   }
 }

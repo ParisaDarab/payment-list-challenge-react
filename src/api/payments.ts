@@ -5,6 +5,8 @@ import { I18N } from "../constants/i18n";
 import { ValidationError } from "../error/validationError";
 import { serviceCall } from "./serviceCall";
 import { services } from "./services";
+import { PaymentApiError } from "../error/paymentApiError";
+import { ApiError } from "../error/apiError";
 
 const SEARCH_INPUT_PATTERN = /^[a-zA-Z0-9À-ÿ'\-_. ]{1,50}$/;
 
@@ -56,8 +58,14 @@ export async function searchPayments(filters: PaymentFilters) {
 
   params.set("page", String(filters.page));
   params.set("pageSize", String(filters.pageSize));
+  try {
+    const data = await serviceCall(services.payments.search, "", params);
 
-  const data = await serviceCall(services.payments.search, "", params);
-
-  return paymentAdaptor(data);
+    return paymentAdaptor(data);
+  } catch (error) {
+    if (error instanceof ApiError) {
+      throw new PaymentApiError(error.status, error.message, error.requestId);
+    }
+    throw error;
+  }
 }

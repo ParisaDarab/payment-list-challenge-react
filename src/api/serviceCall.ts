@@ -1,4 +1,4 @@
-import { PaymentApiError } from "../error/paymentApiError";
+import { ApiError } from "../error/apiError";
 
 type Method = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
 
@@ -36,7 +36,7 @@ export const serviceCall = async (
   );
 
   if (!response.ok) {
-    throw new PaymentApiError(
+    throw new ApiError(
       response.status,
       `Request failed with status ${response.status}`,
       requestId,

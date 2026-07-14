@@ -52,8 +52,6 @@ export const PaymentsPage = () => {
   };
 
   useEffect(() => {
-    if (!searchInput) return;
-
     debounceRef.current = setTimeout(() => {
       setFilters((prev) => ({ ...prev, search: searchInput, page: 1 }));
     }, DEBOUNCE_DELAY_MS);
