@@ -42,9 +42,7 @@ export const SearchForm = ({
             </option>
           ))}
         </Select>
-        <SearchButton type="submit">
-          {I18N.SEARCH_BUTTON}
-        </SearchButton>
+        <SearchButton type="submit">{I18N.SEARCH_BUTTON}</SearchButton>
         <ClearButton type="button" onClick={onClearFilters}>
           {I18N.CLEAR_FILTERS}
         </ClearButton>

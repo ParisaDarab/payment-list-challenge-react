@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { isValidCurrency, isValidSearchInput } from "./api/payments";
+import { isValidCurrency, isValidSearchInput } from "../api/payments";
 
 describe("App - Step 9: isValidPaymentId", () => {
   it("accept a well-formed payment Id", () => {

@@ -1,9 +1,9 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { afterAll, afterEach, beforeAll, describe, expect, test } from "vitest";
-import { server } from "./mocks/node";
-import App from "./App";
-import { I18N } from "./constants/i18n";
+import { server } from "../mocks/node";
+import App from "../App";
+import { I18N } from "../constants/i18n";
 import { format } from "date-fns";
 
 // Helper function to robustly check for error messages with better debugging

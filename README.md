@@ -8,6 +8,25 @@ Your task is to build a payment search interface that allows users to:
 - Handle various edge cases and error states
 - Implement pagination for the table
 
+## 🧭 My Approach
+
+### Architecture
+The app is split into clear layers: `api/` (HTTP calls), `adaptors/` (translate API shape into the UI's domain model), `hooks/` (data-fetching via React Query), `error/` (typed error classes), `types/`, `utils/`, and `components/`. The goal was that no layer needs to know how the others are implemented — e.g. if the API response shape changes, only `paymentAdaptor.ts` needs to change, not the components.
+
+### Key decisions
+- **Adaptor pattern** (`paymentAdaptor.ts`) decouples the wire format from what the UI actually needs, and intentionally drops fields the table doesn't render (`customerAddress`, `description`, `clientId`) rather than passing the raw API shape through the component tree.
+- **Typed errors** (`ValidationError`, `PaymentApiError`) instead of stringly-typed error handling, with a single `getErrorMessage()` mapping errors to user-facing i18n strings — one place to reason about every failure mode.
+- **Client-side validation** (`isValidSearchInput`) rejects obviously-invalid search input before it ever reaches the network, rather than relying on the API to reject it.
+- **React Query** for caching, retry, and loading/error state instead of hand-rolled `useEffect` + `useState` data fetching. Query success/failure is logged as structured JSON events, which is the shape I'd feed into real observability tooling (Sentry/DataDog) in production.
+- **Debounced search with an explicit Search button**: typing debounces at 400ms for a live-filtering feel, but the button stays as the required, accessible, immediate way to trigger a search — useful for keyboard/screen-reader users and anyone who doesn't want to wait out the debounce.
+
+### What I'd do with more time
+- Add a React error boundary around the app for render-time failures outside React Query's error handling
+- Add unit tests for `isValidSearchInput`, `paymentAdaptor`, and the empty-results state, beyond the provided step tests
+- Consolidate on a single styling approach (currently a mix of Tailwind and styled-components)
+- Virtualize the table for large result sets
+- Wire up real observability tooling (Sentry/DataDog) using the structured log events as a starting point
+
 ## 📑 Table of Contents
 
 - [🛠️ Tech Stack](#️-tech-stack)

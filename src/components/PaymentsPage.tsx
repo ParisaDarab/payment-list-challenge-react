@@ -1,4 +1,11 @@
-import { ChangeEvent, FormEvent, MouseEvent, useState } from "react";
+import {
+  ChangeEvent,
+  FormEvent,
+  MouseEvent,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { Spinner, Title, Container, ErrorBox } from "./components";
 import { usePayments } from "../hooks/usePayments";
 import { PaymentTable } from "./table";
@@ -13,6 +20,8 @@ interface PaymentFilters {
   pageSize: number;
 }
 
+const DEBOUNCE_DELAY_MS = 500;
+
 export const PaymentsPage = () => {
   const [filters, setFilters] = useState<PaymentFilters>({
     search: "",
@@ -20,11 +29,11 @@ export const PaymentsPage = () => {
     page: 1,
     pageSize: 5,
   });
-
-  // local input value, separate from the filters actually sent to the API
   const [searchInput, setSearchInput] = useState("");
-  const [currency, setCurrency] = useState("");
   const { isLoading, data, error } = usePayments(filters);
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | undefined>(
+    undefined,
+  );
 
   const onSearchInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchInput(e.target.value);
@@ -32,22 +41,33 @@ export const PaymentsPage = () => {
 
   const onSearchSubmit = (e: FormEvent) => {
     e.preventDefault();
-    setFilters((prev) => ({ ...prev, search: searchInput, currency, page: 1 }));
+    clearTimeout(debounceRef.current);
+    setFilters((prev) => ({ ...prev, search: searchInput, page: 1 }));
   };
 
   const onClearFilters = () => {
-    setFilters((prev) => {
-      return { ...prev, search: "", currency: "" };
-    });
+    clearTimeout(debounceRef.current);
+    setFilters((prev) => ({ ...prev, search: "", currency: "", page: 1 }));
     setSearchInput("");
-    setCurrency("");
   };
+
+  useEffect(() => {
+    if (!searchInput) return;
+
+    debounceRef.current = setTimeout(() => {
+      setFilters((prev) => ({ ...prev, search: searchInput, page: 1 }));
+    }, DEBOUNCE_DELAY_MS);
+
+    return () => clearTimeout(debounceRef.current);
+  }, [searchInput]);
 
   const onSelectCurrency = (e: ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value;
-    if (value === I18N.CURRENCIES) {
-      setCurrency("");
-    } else setCurrency(e.target.value);
+    setFilters((prev) => ({
+      ...prev,
+      currency: value === I18N.CURRENCIES ? "" : value,
+      page: 1,
+    }));
   };
 
   const handlePagination = (e: MouseEvent<HTMLButtonElement>) => {
@@ -57,14 +77,10 @@ export const PaymentsPage = () => {
       data &&
       data.totalPages > filters.page
     ) {
-      setFilters((prev) => {
-        return { ...prev, page: Number(prev.page) + 1 };
-      });
+      setFilters((prev) => ({ ...prev, page: Number(prev.page) + 1 }));
     }
     if (direction === I18N.PREVIOUS_BUTTON_LABEL && filters.page > 1) {
-      setFilters((prev) => {
-        return { ...prev, page: Number(prev.page) - 1 };
-      });
+      setFilters((prev) => ({ ...prev, page: Number(prev.page) - 1 }));
     }
   };
 
@@ -77,7 +93,7 @@ export const PaymentsPage = () => {
         onSearchInputChange={onSearchInputChange}
         onSearchSubmit={onSearchSubmit}
         onClearFilters={onClearFilters}
-        currency={currency}
+        currency={filters.currency}
         onSelectCurrency={onSelectCurrency}
       />
 

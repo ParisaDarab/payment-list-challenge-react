@@ -5,6 +5,7 @@ import {
   QueryClientProvider,
 } from "@tanstack/react-query";
 import { PaymentsPage } from "./components/PaymentsPage";
+import { clientContext } from "./models/systemInfo";
 
 // This is required for tests to pass if ReactQuery is used
 // you don't have to use this library in your solution.
@@ -19,7 +20,11 @@ const queryClient = new QueryClient({
   queryCache: new QueryCache({
     onError: (_error, query) => {
       console.error(
-        JSON.stringify({ event: "query_failed", queryKey: query.queryKey }),
+        JSON.stringify({
+          event: "query_failed",
+          queryKey: query.queryKey,
+          context: clientContext.get(),
+        }),
       );
     },
     onSuccess: (_data, query) => {

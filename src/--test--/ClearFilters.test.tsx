@@ -1,7 +1,9 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { expect, it } from "vitest";
-import { I18N } from "./constants/i18n";
-import App from "./App";
+import App from "../App";
+import { I18N } from "../constants/i18n";
+
+
 
 it("clear filters resets both the search input and the currency dropdown", async () => {
   render(<App />);
