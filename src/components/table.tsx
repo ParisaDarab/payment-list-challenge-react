@@ -16,7 +16,7 @@ interface PaymentTableProps extends paginationProps {
   data: PaymentsResponse;
 }
 
-export const PaymentTable = ({
+export const CustomTable = ({
   data,
   onHandlePagination,
   currentPage,

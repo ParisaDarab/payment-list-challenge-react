@@ -8,7 +8,7 @@ import {
 } from "react";
 import { Spinner, Title, Container, ErrorBox } from "./components";
 import { usePayments } from "../hooks/usePayments";
-import { PaymentTable } from "./table";
+import { CustomTable } from "./table";
 import { I18N } from "../constants/i18n";
 import { getErrorMessage } from "../utils/getErrorMessage";
 import { SearchForm } from "./SearchForm";
@@ -104,7 +104,7 @@ export const PaymentsPage = () => {
       {isLoading && <Spinner />}
 
       {data && (
-        <PaymentTable
+        <CustomTable
           data={data}
           onHandlePagination={handlePagination}
           currentPage={filters.page}

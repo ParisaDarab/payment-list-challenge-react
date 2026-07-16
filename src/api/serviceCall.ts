@@ -8,12 +8,12 @@ export interface ServiceConfig {
   headers?: Record<string, string>;
 }
 
-export const serviceCall = async (
+export const serviceCall = async <T = unknown>(
   service: ServiceConfig,
   url: string = "",
   params?: URLSearchParams | Record<string, string>,
   body?: unknown,
-) => {
+): Promise<T> => {
   const { baseUrl, method, headers } = service;
 
   const searchParams =
@@ -43,5 +43,5 @@ export const serviceCall = async (
     );
   }
 
-  return response.json();
+  return response.json() as Promise<T>;
 };

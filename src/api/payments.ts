@@ -1,6 +1,6 @@
 import paymentAdaptor from "../adaptors/paymentAdaptor";
 import { VALID_CURRENCIES } from "../constants";
-import { Currency, PaymentFilters } from "../types/payment";
+import { Currency, PaymentFilters, PaymentsResponse } from "../types/payment";
 import { I18N } from "../constants/i18n";
 import { ValidationError } from "../error/validationError";
 import { serviceCall } from "./serviceCall";
@@ -59,7 +59,11 @@ export async function searchPayments(filters: PaymentFilters) {
   params.set("page", String(filters.page));
   params.set("pageSize", String(filters.pageSize));
   try {
-    const data = await serviceCall(services.payments.search, "", params);
+    const data = await serviceCall<PaymentsResponse>(
+      services.payments.search,
+      "",
+      params,
+    );
 
     return paymentAdaptor(data);
   } catch (error) {
